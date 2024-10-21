@@ -3,6 +3,10 @@ import { CreateBasicReportDto } from './dto/create-basic-report.dto';
 import { UpdateBasicReportDto } from './dto/update-basic-report.dto';
 import { PrismaClient } from '@prisma/client';
 
+import PdfPrinter from 'pdfmake';
+
+
+
 @Injectable()
 export class BasicReportsService extends PrismaClient implements OnModuleInit  {
   
