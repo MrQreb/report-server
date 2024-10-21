@@ -1,39 +1,17 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Res } from '@nestjs/common';
 import { BasicReportsService } from './basic-reports.service';
-import { CreateBasicReportDto } from './dto/create-basic-report.dto';
-import { UpdateBasicReportDto } from './dto/update-basic-report.dto';
+import { Response } from 'express';
 
 @Controller('basic-reports')
 export class BasicReportsController {
   constructor(private readonly basicReportsService: BasicReportsService) {}
 
-  @Post()
-  create(@Body() createBasicReportDto: CreateBasicReportDto) {
-    return this.basicReportsService.create(createBasicReportDto);
-  }
-
-  // @Get()
-  // findAll() {
-  //   return this.basicReportsService.findAll();
-  // }
-
   @Get()
-  async hello() {
-    return await this.basicReportsService.hello();
-  }
-
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.basicReportsService.findOne(+id);
-  // }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBasicReportDto: UpdateBasicReportDto) {
-    return this.basicReportsService.update(+id, updateBasicReportDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.basicReportsService.remove(+id);
+   hello( @Res() response:Response) {
+      
+      const pdfDoc =  this.basicReportsService.hello();
+      response.setHeader('Content-Type','application/pdf');
+      pdfDoc.pipe(response);
+      pdfDoc.end()
   }
 }
