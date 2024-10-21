@@ -1,8 +1,15 @@
 import { TDocumentDefinitions } from "pdfmake/interfaces"
 
-export const getHelloReport = ():TDocumentDefinitions =>{
+interface ReportOptions{
+    name:string;
+}
+
+export const getHelloReport = ( options: ReportOptions ):TDocumentDefinitions =>{
+    
+    const { name } = options;
+
     const docDefinition:TDocumentDefinitions = {
-        content:['hola']
+        content:[`Hola ${name}`]
     }
     return docDefinition
 }
