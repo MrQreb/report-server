@@ -1,10 +1,12 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { PrinterService } from 'src/printer/printer.service';
-import { getEmploymentLetterReport, getHelloReport } from 'src/reports';
+import { getEmploymentLetterReport } from 'src/reports';
+import { contriesReport } from './countries-report';
 
 @Injectable()
 export class BasicReportsService extends PrismaClient implements OnModuleInit  {
+  
 
   //LLamo servicio e inizializo
   constructor( private readonly printerService:PrinterService){
@@ -21,5 +23,22 @@ export class BasicReportsService extends PrismaClient implements OnModuleInit  {
     this.printerService.createPdf(docDefinition)
     return this.printerService.createPdf(docDefinition)
   }
+
+  async getCountryReport(){
+
+    //Madar la datra
+    const countries = await this.countries.findMany({
+      where:{
+        local_name:{
+          not:null
+        }
+      }
+    });
+
+    const docDefinition = contriesReport({ countries:countries });
+    return this.printerService.createPdf(docDefinition);
+  }
+
+
 
 }

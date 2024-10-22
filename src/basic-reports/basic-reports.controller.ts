@@ -20,5 +20,13 @@ export class BasicReportsController {
      response.setHeader('Content-Type','application/pdf');
      pdfDoc.pipe(response);
      pdfDoc.end()
- }
+  }
+
+  @Get('countries-report')
+  async getCountryReport(@Res() response: Response) {
+    const pdfDoc = await this.basicReportsService.getCountryReport();
+    response.setHeader('Content-Type', 'application/pdf');
+    pdfDoc.pipe(response);
+    pdfDoc.end();
+  }
 }
