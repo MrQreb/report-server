@@ -8,10 +8,17 @@ export class BasicReportsController {
 
   @Get()
    hello( @Res() response:Response) {
-      
       const pdfDoc =  this.basicReportsService.hello();
       response.setHeader('Content-Type','application/pdf');
       pdfDoc.pipe(response);
       pdfDoc.end()
   }
+  
+  @Get('employment-letter')
+  employmentLetter( @Res() response:Response) {
+     const pdfDoc =  this.basicReportsService.hello();
+     response.setHeader('Content-Type','application/pdf');
+     pdfDoc.pipe(response);
+     pdfDoc.end()
+ }
 }
